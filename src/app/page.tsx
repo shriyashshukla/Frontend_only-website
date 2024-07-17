@@ -1,9 +1,14 @@
+import HeroSection from "@/components/HeroSection";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <>
-    <h1 className="text-4xl text-center py-1">this is center</h1>
-    </>
+    
+<main className="main-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02]">
+<h2 className="text-2xl text-center">
+</h2>
+<HeroSection/>
+</main>
+  
   );
 }
