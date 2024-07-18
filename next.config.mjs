@@ -3,6 +3,6 @@ const nextConfig = {};
 
 export default {
     images: {
-      domains: ['assets.aceternity.com'],
+      domains: ['images.unsplash.com'],
     },
   };
