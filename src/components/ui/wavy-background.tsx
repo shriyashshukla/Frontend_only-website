@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { cn } from "@/utils/cn";
 import React, { useEffect, useRef } from "react";
 import { createNoise3D } from "simplex-noise";
@@ -8,14 +8,14 @@ export const WavyBackground = ({
   className,
   containerClassName,
   colors,
-  waveWidth = 50,
-  backgroundFill = "black",
+  waveWidth,
+  backgroundFill,
   blur = 10,
   speed = "fast",
   waveOpacity = 0.5,
   ...props
 }: {
-  children?: React.ReactNode;
+  children?: any;
   className?: string;
   containerClassName?: string;
   colors?: string[];
@@ -27,9 +27,14 @@ export const WavyBackground = ({
   [key: string]: any;
 }) => {
   const noise = createNoise3D();
-  let w: number, h: number, nt: number, i: number, x: number, ctx: CanvasRenderingContext2D | null, canvas: HTMLCanvasElement | null;
+  let w: number,
+    h: number,
+    nt: number,
+    i: number,
+    x: number,
+    ctx: any,
+    canvas: any;
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
   const getSpeed = () => {
     switch (speed) {
       case "slow":
@@ -43,25 +48,27 @@ export const WavyBackground = ({
 
   const init = () => {
     canvas = canvasRef.current;
-    if (!canvas) return;
     ctx = canvas.getContext("2d");
-    if (!ctx) return;
     w = ctx.canvas.width = window.innerWidth;
     h = ctx.canvas.height = window.innerHeight;
     ctx.filter = `blur(${blur}px)`;
     nt = 0;
     window.onresize = function () {
-      w = ctx!.canvas.width = window.innerWidth;
-      h = ctx!.canvas.height = window.innerHeight;
-      ctx!.filter = `blur(${blur}px)`;
+      w = ctx.canvas.width = window.innerWidth;
+      h = ctx.canvas.height = window.innerHeight;
+      ctx.filter = `blur(${blur}px)`;
     };
     render();
   };
 
-  const waveColors = colors ?? ["#38bdf8", "#818cf8", "#c084fc", "#e879f9", "#22d3ee"];
-
+  const waveColors = colors ?? [
+    "#38bdf8",
+    "#818cf8",
+    "#c084fc",
+    "#e879f9",
+    "#22d3ee",
+  ];
   const drawWave = (n: number) => {
-    if (!ctx) return;
     nt += getSpeed();
     for (i = 0; i < n; i++) {
       ctx.beginPath();
@@ -78,7 +85,6 @@ export const WavyBackground = ({
 
   let animationId: number;
   const render = () => {
-    if (!ctx) return;
     ctx.fillStyle = backgroundFill || "black";
     ctx.globalAlpha = waveOpacity || 0.5;
     ctx.fillRect(0, 0, w, h);
@@ -94,8 +100,17 @@ export const WavyBackground = ({
   }, []);
 
   return (
-    <div className={cn("h-screen relative overflow-hidden", containerClassName)}>
-      <canvas ref={canvasRef} className="absolute inset-0 z-0" id="canvas"></canvas>
+    <div
+      className={cn(
+        "h-screen flex flex-col items-center justify-center",
+        containerClassName
+      )}
+    >
+      <canvas
+        className="absolute inset-0 z-0"
+        ref={canvasRef}
+        id="canvas"
+      ></canvas>
       <div className={cn("relative z-10", className)} {...props}>
         {children}
       </div>
